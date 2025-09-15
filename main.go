@@ -5,6 +5,10 @@ import (
 	"crypto/sha256"
 )
 
+type Blockchain struct {
+	blocks []*Block
+}
+
 type Block struct {
 	Hash     []byte
 	Data     []byte
@@ -16,6 +20,12 @@ func (b *Block) DeriveHash() {
 	hash := sha256.Sum256(info)
 	b.Hash = hash[:]
 
+}
+
+func CreateBlock(data string, prevHash []byte) *Block {
+	block := &Block{[]byte{}, []byte(data), prevHash}
+	block.DeriveHash()
+	return block
 }
 
 func main() {
